@@ -13,6 +13,7 @@ public class ResultsActivity extends AppCompatActivity {
     int maxScore = 0;
 
     TextView textViewScore = null;
+    TextView textViewPercent = null;
     TextView textViewResultDescription = null;
 
     Button buttonPlayAgain = null;
@@ -29,7 +30,8 @@ public class ResultsActivity extends AppCompatActivity {
         //       To get this back try: getIntent().getIntExtra(..., 0)
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+        curScore = getIntent().getIntExtra("Player score", 0);
+        maxScore = getIntent().getIntExtra("Max score", 0);
 
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,6 +39,12 @@ public class ResultsActivity extends AppCompatActivity {
         // Hint: You can use the getPercentage() method provided to get the percentage correct value.
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        this.textViewPercent = (TextView) findViewById(R.id.textViewPercent);
+        this.textViewResultDescription = (TextView) findViewById(R.id.textViewResultDescription);
+
+        textViewPercent.setText(String.valueOf(curScore) + "/" + String.valueOf(maxScore));
+        textViewResultDescription.setText("You answered " + getPercentage(curScore, maxScore) + "of" +
+                                            " the quiz questions correctly");
 
         buttonPlayAgain = (Button)findViewById(R.id.buttonPlayAgain);
         this.buttonPlayAgain.setOnClickListener(new View.OnClickListener() {

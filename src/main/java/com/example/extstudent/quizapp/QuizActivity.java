@@ -19,7 +19,7 @@ public class QuizActivity extends AppCompatActivity {
     int currentQuestionNumber = 1;
 
     private int currentScore = 0;
-    private int maxScore = 3;
+    private int maxScore = 0;
 
     TextView textViewQuestionTitle = null;
     TextView textViewQuestion = null;
@@ -69,7 +69,9 @@ public class QuizActivity extends AppCompatActivity {
                         // Use currentQuestionNumber as the index (remember to increment this at the end so that we can fetch the next question index).
                         ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+                        currentQuestion = quizQuestionList.get(currentQuestionNumber);
                         currentQuestionNumber++;
+                        setQuestionView(currentQuestion);
 
                     }
                     else {
@@ -82,7 +84,8 @@ public class QuizActivity extends AppCompatActivity {
                         ///////////////////////////////////////////////////////////////////////////////////////////////////////
                         Intent intent = new Intent(QuizActivity.this,
                                 com.example.extstudent.quizapp.ResultsActivity.class);
-                        intent.putExtra("Score", currentScore);
+                        intent.putExtra("Player score", currentScore);
+                        intent.putExtra("Max score", maxScore);
                         startActivity(intent);
 
                     }
@@ -139,21 +142,21 @@ public class QuizActivity extends AppCompatActivity {
         this.quizQuestionList.add(q3);
 
         QuizQuestion q4 = new QuizQuestion();
-        q4.setQuestion("?");
-        q4.setChoiceA("Andrew");
-        q4.setChoiceB("James");
-        q4.setChoiceC("Thomas");
-        q4.setChoiceD("Bryce");
-        q4.setCorrectAnswer("Thomas");
+        q4.setQuestion("2 + 2 X 2");
+        q4.setChoiceA("4");
+        q4.setChoiceB("8");
+        q4.setChoiceC("6");
+        q4.setChoiceD("2");
+        q4.setCorrectAnswer("6");
         this.quizQuestionList.add(q4);
 
         QuizQuestion q5 = new QuizQuestion();
         q5.setQuestion("What was the answer to question 3?");
-        q5.setChoiceA("Andrew");
-        q5.setChoiceB("James");
+        q5.setChoiceA("Park");
+        q5.setChoiceB("Bryce");
         q5.setChoiceC("Thomas");
-        q5.setChoiceD("Bryce");
-        q5.setCorrectAnswer("Thomas");
+        q5.setChoiceD("Song");
+        q5.setCorrectAnswer("Park");
         this.quizQuestionList.add(q5);
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -188,6 +191,15 @@ public class QuizActivity extends AppCompatActivity {
         // - Set the score view with the current score (remeber to convert integer to string).
         //   Example: Score: 2
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        textViewQuestionTitle.setText("Question #" + Integer.toString(currentQuestionNumber));
+        textViewQuestion.setText(currentQuestion.getQuestion());
+        radioButtonA.setText(currentQuestion.getChoiceA());
+        radioButtonB.setText(currentQuestion.getChoiceB());
+        radioButtonC.setText(currentQuestion.getChoiceC());
+        radioButtonD.setText(currentQuestion.getChoiceD());
+        textViewScore.setText("Score: " + Integer.toString(currentScore));
+
     }
 
     private boolean validateAnswer() {
